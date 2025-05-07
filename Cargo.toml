@@ -1,8 +1,8 @@
 [package]
 name = "rusty_os"
 version = "0.1.0"
+authors = ["FabioToh <fabiocanavarrotoh@gmail.com>"]
 edition = "2024"
-panic = "abort"
 
 [dependencies]
 
