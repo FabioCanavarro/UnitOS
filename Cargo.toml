@@ -5,9 +5,3 @@ authors = ["FabioToh <fabiocanavarrotoh@gmail.com>"]
 edition = "2024"
 
 [dependencies]
-
-[profile.dev]
-panic = "abort"
-
-[profile.release]
-panic = "abort"
