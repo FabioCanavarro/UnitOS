@@ -1,7 +1,3 @@
-// cargo rustc -- -C link-args="/ENTRY:_start /SUBSYSTEM:console"
-
-
-
 #![no_std]
 #![no_main]
 
