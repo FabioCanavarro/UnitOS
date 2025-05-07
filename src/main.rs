@@ -1,6 +1,9 @@
 #![no_std]
 #![no_main]
 
+// NOTE: Command i used for qemu :)
+// ./../../ucrt64/bin/qemu-system-x86_64 -drive format=raw,file=bootimage-rusty_os.bin
+
 use core::{isize, panic::PanicInfo};
 
 static HELLO: &[u8] = b"Hello World";

@@ -5,3 +5,4 @@ authors = ["FabioToh <fabiocanavarrotoh@gmail.com>"]
 edition = "2024"
 
 [dependencies]
+bootloader = "0.9"
