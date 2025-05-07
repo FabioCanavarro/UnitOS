@@ -2,5 +2,12 @@
 name = "rusty_os"
 version = "0.1.0"
 edition = "2024"
+panic = "abort"
 
 [dependencies]
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
