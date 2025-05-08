@@ -1,8 +1,9 @@
-use core::{fmt, usize};
-
+use core::fmt;
 use char::ScreenChar;
-use color::ColorCode;
+use color::{Color, ColorCode};
 use volatile::Volatile;
+use lazy_static::lazy_static;
+use spin::Mutex;
 
 pub mod char;
 pub mod color;
@@ -22,6 +23,7 @@ pub struct Writer {
 }
 
 impl Writer {
+    #![allow(dead_code)]
     pub fn new(color: ColorCode) -> Writer {
         Writer {
             column_pos: 0,
@@ -92,4 +94,12 @@ impl fmt::Write for Writer {
         self.write_string(s);
         Ok(())
     }
+}
+
+lazy_static! {
+    pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
+        column_pos: 0,
+        color_code: ColorCode::new(Color::Yellow, Color::Black),
+        buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
+    });
 }

@@ -48,6 +48,12 @@ pub struct ColorCode {
     pub code: u8,
 }
 
+impl ColorCode {
+    pub fn new(background: Color, foreground: Color) -> ColorCode {
+        color_comb(background, foreground)
+    }
+}
+
 pub fn color_comb(background: Color, foreground: Color) -> ColorCode {
     ColorCode {
         /* NOTE: Shifts the Background to the left so, 0000 0000, first half is backfround, second

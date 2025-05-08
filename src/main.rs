@@ -27,17 +27,6 @@ pub extern "C" fn _start() -> ! {
         }
     */
 
-    use core::fmt::Write;
-    let mut writer = Writer::new(ColorCode {
-        code: color_comb(Color::Black, Color::Red).code,
-    });
-
-    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
-    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
-    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
-    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
-    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
-    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
 
 
     loop {}
