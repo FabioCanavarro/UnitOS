@@ -18,8 +18,8 @@ Since this is a very basic OS, you'll need a way to compile it and run it in an 
 
 2.  **Clone the repository:**
     ```bash
-    git clone <your_repository_url>
-    cd <your_repository_name>
+    git clone https://github.com/FabioCanavarro/UnitOS
+    cd UnitOS
     ```
 
 3.  **Build the kernel:**
