@@ -5,14 +5,11 @@ This is a simple, hobby operating system kernel written in Rust. It's designed f
 ## Features
 
 * **Bare-Bones Kernel:** A minimal kernel implementation.
-* **No Standard Library:** Uses `#![no_std]` to avoid dependencies on the standard Rust library.
 * **VGA Text Output:** Writes text directly to the VGA buffer for display.
-* **Panic Handling:** Custom panic handler to print error messages.
-* **Basic Printing:** Includes a `println!` macro for basic output.
 
 ## Build and Run Instructions
 
-Since this is a very basic OS, you'll need a way to compile it and run it in an environment like QEMU.  Here's a general outline:
+Since this is a very basic OS, you'll need a way to compile it and run it in an environment like QEMU. Here's a general outline:
 
 1.  **Prerequisites:**
     * Rust (nightly is recommended)
