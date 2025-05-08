@@ -1,4 +1,4 @@
-use core::fmt;
+use core::{fmt, usize};
 
 use char::ScreenChar;
 use color::ColorCode;
@@ -50,7 +50,26 @@ impl Writer {
     }
 
     fn new_line(&mut self) {
-        todo!()
+        for row in 1..BUFFER_HEIGHT {
+            for col in 0..BUFFER_WIDTH {
+                let char = self.buffer.chars[row as usize][col as usize].read();
+                self.buffer.chars[row as usize - 1][col as usize].write(char);
+            }
+        }
+        self.clear_row(BUFFER_HEIGHT-1);
+        self.column_pos = 0;
+    }
+
+    fn clear_row(&mut self, row: u8) {
+        let blank = ScreenChar{
+            char: b' ',
+            color: self.color_code
+        };
+        for col in 0 .. BUFFER_WIDTH {
+            self.buffer.chars[row as usize][col as usize].write(blank)
+        }
+
+
     }
 
     pub fn write_string(&mut self, string: &str) {
