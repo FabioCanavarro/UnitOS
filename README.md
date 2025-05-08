@@ -16,8 +16,8 @@ Since this is a very basic OS, you'll need a way to compile it and run it in an 
 
 1.  **Prerequisites:**
     * Rust (nightly is recommended)
-    * QEMU
-    * x86_64 linker (e.g., from binutils)
+    * bootimage (as current version is needed and the project uses an older version)
+    * Qemu (Needed unless ran in a real hardware)
 
 2.  **Clone the repository:**
     ```bash
@@ -31,12 +31,17 @@ Since this is a very basic OS, you'll need a way to compile it and run it in an 
     cargo build --target x86_64-unknown-none
     ```
 
-4.  **Run with QEMU (Example):**
+4.  **Run with QEMU**
     ```bash
     qemu-system-x86_64 -kernel target/x86_64-unknown-none/debug/your_kernel_name
     ```
-    * Replace `your_kernel_name` with the actual name of your compiled kernel binary (likely found in `target/x86_64-unknown-none/debug/`).
 
+or 
+
+3. **Run and build with cargo**
+   ```bash
+   cargo run
+   ```
 ##  Further Development
 
 This is a very basic starting point.  Here are some ideas for expanding this kernel:
