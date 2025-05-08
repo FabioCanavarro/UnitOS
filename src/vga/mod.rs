@@ -21,8 +21,8 @@ pub struct writer {
 impl writer {
 
     pub fn write_byte(&mut self, byte: u8) {
-        match &[byte;1] {
-            b"\n" => self.new_line(),
+        match byte {
+            b'\n' => self.new_line(),
             _ => {
                 if self.column_pos >=BUFFER_WIDTH {
                     self.new_line();
@@ -43,15 +43,14 @@ impl writer {
     }
 
     pub fn write_string(&mut self, string: &str) {
-        let bytes = string.as_bytes();
-        for byte in bytes {
+        for byte in string.as_bytes() {
             match byte {
             /* NOTE: This code diffrentiates the byte, since the vga writer supports some
             *   additional char that isnt writable on rust utf-8, so we match if it is in the range
             *   of the writeable or is a new line
             *   if not, we print ■■■, just one tho
             */
-            0x20..=0x7e | b"\n" => self.write_byte(byte),
+            0x20..=0x7e | b'\n' => self.write_byte(*byte),
             _ => self.write_byte(0xfe),
 
         }
