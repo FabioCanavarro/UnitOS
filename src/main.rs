@@ -33,6 +33,11 @@ pub extern "C" fn _start() -> ! {
     });
 
     writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
+    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
+    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
+    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
+    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
+    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
 
 
     loop {}
