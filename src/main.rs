@@ -2,10 +2,9 @@
 #![no_main]
 
 use core::panic::PanicInfo;
-use vga::{
-    Writer,
-    color::{Color, ColorCode, color_comb},
-};
+use vga::WRITER;
+use core::fmt::Write;
+
 mod vga;
 
 #[unsafe(no_mangle)]
@@ -28,6 +27,8 @@ pub extern "C" fn _start() -> ! {
     */
 
 
+
+    writeln!(WRITER.lock(),"HELLO THERE").unwrap();
 
     loop {}
 }
