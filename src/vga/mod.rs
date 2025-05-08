@@ -1,5 +1,8 @@
+use core::fmt;
+
 use char::ScreenChar;
 use color::ColorCode;
+use volatile::Volatile;
 
 pub mod char;
 pub mod color;
@@ -9,7 +12,7 @@ const BUFFER_WIDTH: u8 = 80;
 
 #[repr(transparent)]
 pub struct Buffer {
-    chars: [[ScreenChar; BUFFER_WIDTH as usize]; BUFFER_HEIGHT as usize],
+    chars: [[Volatile<ScreenChar>; BUFFER_WIDTH as usize]; BUFFER_HEIGHT as usize],
 }
 
 pub struct Writer {
@@ -35,11 +38,12 @@ impl Writer {
                     self.new_line();
                 }
 
-                self.buffer.chars[BUFFER_HEIGHT as usize - 1][self.column_pos as usize] =
+                self.buffer.chars[BUFFER_HEIGHT as usize - 1][self.column_pos as usize].write(
                     ScreenChar {
                         char: byte,
                         color: self.color_code,
-                    };
+                    }
+                );
                 self.column_pos += 1;
             }
         }
@@ -61,5 +65,12 @@ impl Writer {
                 _ => self.write_byte(0xfe),
             }
         }
+    }
+}
+
+impl fmt::Write for Writer {
+    fn write_str(&mut self, s: &str) -> fmt::Result {
+        self.write_string(s);
+        Ok(())
     }
 }

@@ -1,20 +1,15 @@
 #![no_std]
 #![no_main]
 
-use core::{isize, panic::PanicInfo};
-
+use core::panic::PanicInfo;
 use vga::{
     Writer,
     color::{Color, ColorCode, color_comb},
 };
 mod vga;
 
-static HELLO: &[u8] = b"Hello World";
-
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
-    let vga_buffer = 0xb8000 as *mut u8;
-
     /*
         * NOTE: From my understanding
         * the index starts from 0 so
@@ -32,11 +27,13 @@ pub extern "C" fn _start() -> ! {
         }
     */
 
+    use core::fmt::Write;
     let mut writer = Writer::new(ColorCode {
         code: color_comb(Color::Black, Color::Red).code,
     });
 
-    writer.write_string("HELLOOOO");
+    writeln!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
+
 
     loop {}
 }
