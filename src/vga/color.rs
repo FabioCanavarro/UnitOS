@@ -38,21 +38,21 @@ impl From<Color> for u8 {
             Color::LightRed => 12,
             Color::Pink => 13,
             Color::Yellow => 14,
-            Color::White => 15
+            Color::White => 15,
         }
     }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct ColorCode{
-    pub code: u8
+pub struct ColorCode {
+    pub code: u8,
 }
 
-pub fn color_comb (background: Color, foreground: Color) -> ColorCode {
-    ColorCode{
+pub fn color_comb(background: Color, foreground: Color) -> ColorCode {
+    ColorCode {
         /* NOTE: Shifts the Background to the left so, 0000 0000, first half is backfround, second
-        *        half is foreground
-        */
-        code: u8::from(background) << 4 | u8::from(foreground)
+         *        half is foreground
+         */
+        code: u8::from(background) << 4 | u8::from(foreground),
     }
 }
