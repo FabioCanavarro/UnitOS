@@ -1,4 +1,4 @@
-# Rust Bare-Bones OS
+# UnitOS: Rust Bare-Bones OS
 
 This is a simple, hobby operating system kernel written in Rust. It's designed for x86_64 architecture and uses a no_std environment, meaning it doesn't rely on the standard Rust library. This project is primarily for learning purposes, exploring OS development concepts, and experimenting with Rust in a low-level environment.
 
