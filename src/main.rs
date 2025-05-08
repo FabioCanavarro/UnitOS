@@ -2,8 +2,6 @@
 #![no_main]
 
 use core::panic::PanicInfo;
-use vga::WRITER;
-use core::fmt::Write;
 
 mod vga;
 
@@ -27,8 +25,12 @@ pub extern "C" fn _start() -> ! {
     */
 
 
-
-    writeln!(WRITER.lock(),"HELLO THERE").unwrap();
+    println!("Hi there");
+    println!("How's life lol");
+    println!("Not sure bout yours, but i love mine lol");
+    println!("Love my family so much");
+    println!("Love programming so much too");
+    println!("Exercising here and there");
 
     loop {}
 }
