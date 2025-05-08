@@ -2,6 +2,7 @@
 #![no_main]
 
 use core::{isize, panic::PanicInfo};
+mod vga;
 
 static HELLO: &[u8] = b"Hello World";
 
