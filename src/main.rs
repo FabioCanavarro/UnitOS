@@ -31,11 +31,13 @@ pub extern "C" fn _start() -> ! {
     println!("Love my family so much");
     println!("Love programming so much too");
     println!("Exercising here and there");
+    panic!("Something wong with u lol");
 
     loop {}
 }
 
 #[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
+    println!("{}",info);
     loop {}
 }
