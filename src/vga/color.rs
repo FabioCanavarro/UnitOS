@@ -45,7 +45,7 @@ impl From<Color> for u8 {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ColorCode{
-    code: u8
+    pub code: u8
 }
 
 pub fn color_comb (background: Color, foreground: Color) -> ColorCode {
