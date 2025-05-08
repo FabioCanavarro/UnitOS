@@ -42,5 +42,21 @@ impl writer {
         todo!()
     }
 
+    pub fn write_string(&mut self, string: &str) {
+        let bytes = string.as_bytes();
+        for byte in bytes {
+            match byte {
+            /* NOTE: This code diffrentiates the byte, since the vga writer supports some
+            *   additional char that isnt writable on rust utf-8, so we match if it is in the range
+            *   of the writeable or is a new line
+            *   if not, we print ■■■, just one tho
+            */
+            0x20..=0x7e | b"\n" => self.write_byte(byte),
+            _ => self.write_byte(0xfe),
 
+        }
+        }
+        
+
+    }
 }
