@@ -8,17 +8,27 @@ const BUFFER_HEIGHT: u8 = 25;
 const BUFFER_WIDTH: u8 = 80;
 
 #[repr(transparent)]
-pub struct buffer {
+pub struct Buffer {
     chars: [[ScreenChar; BUFFER_WIDTH as usize]; BUFFER_HEIGHT as usize]
 }
 
-pub struct writer {
+pub struct Writer {
     column_pos: u8,
     color_code: ColorCode,
-    buffer: &'static mut buffer
+    buffer: &'static mut Buffer
 }
 
-impl writer {
+impl Writer {
+
+    pub fn new(color: ColorCode) -> Writer {
+        Writer { 
+            column_pos: 0,
+            color_code: color,
+            buffer: unsafe {
+                &mut *(0xb8000 as *mut Buffer)
+            }
+        }
+    }
 
     pub fn write_byte(&mut self, byte: u8) {
         match byte {
