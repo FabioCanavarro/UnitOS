@@ -1,18 +1,15 @@
 # UnitOS: Rust Bare-Bones OS
 
-This is a simple, hobby operating system kernel written in Rust. It's designed for x86_64 architecture and uses a no_std environment, meaning it doesn't rely on the standard Rust library. This project is primarily for learning purposes, exploring OS development concepts, and experimenting with Rust in a low-level environment.
+This is a simple, hobby operating system kernel written in Rust. It's designed for x86_64 architecture
 
 ## Features
 
 * **Bare-Bones Kernel:** A minimal kernel implementation.
-* **No Standard Library:** Uses `#![no_std]` to avoid dependencies on the standard Rust library.
 * **VGA Text Output:** Writes text directly to the VGA buffer for display.
-* **Panic Handling:** Custom panic handler to print error messages.
-* **Basic Printing:** Includes a `println!` macro for basic output.
 
 ## Build and Run Instructions
 
-Since this is a very basic OS, you'll need a way to compile it and run it in an environment like QEMU.  Here's a general outline:
+Since this is a very basic OS, you'll need a way to compile it and run it in an environment like QEMU. Here's a general outline:
 
 1.  **Prerequisites:**
     * Rust (nightly is recommended)
@@ -21,8 +18,8 @@ Since this is a very basic OS, you'll need a way to compile it and run it in an 
 
 2.  **Clone the repository:**
     ```bash
-    git clone <your_repository_url>
-    cd <your_repository_name>
+    git clone https://github.com/FabioCanavarro/UnitOS
+    cd UnitOS
     ```
 
 3.  **Build the kernel:**
