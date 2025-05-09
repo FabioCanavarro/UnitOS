@@ -28,12 +28,7 @@ pub extern "C" fn _start() -> ! {
     */
 
 
-    println!("Hi there");
-    println!("How's life lol");
-    println!("Not sure bout yours, but i love mine lol");
-    println!("Love my family so much");
-    println!("Love programming so much too");
-    println!("Exercising here and there");
+    println!("UnitOs\n\n");
 
     #[cfg(test)]
     test_main();
@@ -51,15 +46,15 @@ fn panic(info: &PanicInfo) -> ! {
 pub fn test_runner(tests: &[&dyn Fn()]) {
     println!("Running {} tests", tests.len());
     for test in tests {
-        println!("\n");
+        println!("");
         test();
     }
 }
 
 #[test_case]
 fn tassert() {
-    println!("tassert....");
+    print!("tassert.... ");
     assert_eq!(1,1);
-    println!("OK");
+    print!("[OK]");
 
 }
