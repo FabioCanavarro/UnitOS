@@ -2,6 +2,7 @@
 #![no_main]
 #![feature(custom_test_frameworks)]
 #![test_runner(crate::test_runner)]
+#![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
 
@@ -34,6 +35,9 @@ pub extern "C" fn _start() -> ! {
     println!("Love programming so much too");
     println!("Exercising here and there");
 
+    #[cfg(test)]
+    test_main();
+
     loop {}
 }
 
@@ -47,6 +51,15 @@ fn panic(info: &PanicInfo) -> ! {
 pub fn test_runner(tests: &[&dyn Fn()]) {
     println!("Running {} tests", tests.len());
     for test in tests {
+        println!("\n");
         test();
     }
+}
+
+#[test_case]
+fn tassert() {
+    println!("tassert....");
+    assert_eq!(1,1);
+    println!("OK");
+
 }
