@@ -10,6 +10,7 @@ use x86_64::instructions::port::Port;
 
 mod tests;
 mod vga;
+mod serial;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
