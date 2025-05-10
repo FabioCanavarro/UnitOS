@@ -27,4 +27,4 @@ jobs:
     - name: Build
       run: cargo build --verbose
     - name: Run tests with custom script
-      run: pwd; ./run_tests.sh
+      run: chmod +x run_tests.sh; ./run_tests.sh
