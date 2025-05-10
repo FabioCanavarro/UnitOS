@@ -2,7 +2,7 @@ use crate::*;
 
 #[test_case]
 fn tassert() {
-    print!("tassert.... ");
+    serial_print!("tassert.... ");
     assert_eq!(1, 1);
-    print!("[OK]");
+    serial_print!("[OK]");
 }

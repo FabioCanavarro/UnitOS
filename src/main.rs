@@ -8,9 +8,11 @@ use core::panic::PanicInfo;
 
 use x86_64::instructions::port::Port;
 
-mod tests;
+pub mod serial;
 mod vga;
-mod serial;
+
+#[cfg(test)]
+mod tests;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
@@ -31,7 +33,7 @@ pub extern "C" fn _start() -> ! {
         }
     */
 
-    println!("UnitOs\n\n");
+    println!("UnitOs");
 
     // Running all tests
     #[cfg(test)]
@@ -48,11 +50,11 @@ fn panic(info: &PanicInfo) -> ! {
 
 #[cfg(test)]
 pub fn test_runner(tests: &[&dyn Fn()]) {
-    println!("Running {} tests", tests.len());
+    serial_println!("Running {} tests\n", tests.len());
     for test in tests {
-        println!("");
         test();
     }
+    serial_println!("\n");
     exit_qemu(QemuExitCode::Success);
 }
 
