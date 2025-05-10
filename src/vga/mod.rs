@@ -1,9 +1,9 @@
-use core::fmt;
 use char::ScreenChar;
 use color::{Color, ColorCode};
-use volatile::Volatile;
+use core::fmt;
 use lazy_static::lazy_static;
 use spin::Mutex;
+use volatile::Volatile;
 
 pub mod char;
 pub mod color;
@@ -44,7 +44,7 @@ impl Writer {
                     ScreenChar {
                         char: byte,
                         color: self.color_code,
-                    }
+                    },
                 );
                 self.column_pos += 1;
             }
@@ -58,20 +58,18 @@ impl Writer {
                 self.buffer.chars[row as usize - 1][col as usize].write(char);
             }
         }
-        self.clear_row(BUFFER_HEIGHT-1);
+        self.clear_row(BUFFER_HEIGHT - 1);
         self.column_pos = 0;
     }
 
     fn clear_row(&mut self, row: u8) {
-        let blank = ScreenChar{
+        let blank = ScreenChar {
             char: b' ',
-            color: self.color_code
+            color: self.color_code,
         };
-        for col in 0 .. BUFFER_WIDTH {
+        for col in 0..BUFFER_WIDTH {
             self.buffer.chars[row as usize][col as usize].write(blank)
         }
-
-
     }
 
     pub fn write_string(&mut self, string: &str) {
@@ -99,12 +97,12 @@ impl fmt::Write for Writer {
 lazy_static! {
     pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
         column_pos: 0,
-        color_code: ColorCode::new(Color::Black,Color::Yellow),
+        color_code: ColorCode::new(Color::Black, Color::Yellow),
         buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
     });
 }
 
-/* NOTE: These are from the rust source, 
+/* NOTE: These are from the rust source,
  * the print and the _print is modified
  * the _print is my function which writes down the arg given by print!
  */
@@ -125,28 +123,3 @@ pub fn _print(args: fmt::Arguments) {
     use core::fmt::Write;
     WRITER.lock().write_fmt(args).unwrap();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
