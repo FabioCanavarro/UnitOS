@@ -1,10 +1,11 @@
 FROM ubuntu:latest
 
-# Install necessary packages including ca-certificates
+# Install necessary packages including ca-certificates and build tools
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     qemu-system-x86 qemu-utils \
-    curl ca-certificates && \
+    curl ca-certificates \
+    build-essential && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Rust and components
