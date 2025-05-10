@@ -1,21 +1,21 @@
 FROM ubuntu:latest
 
-# Install QEMU
+# Install necessary packages including ca-certificates
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    qemu-system-x86 qemu-utils && \
+    qemu-system-x86 qemu-utils \
+    curl ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Rust and components
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    curl && \
-    rm -rf /var/lib/apt/lists/* && \
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly && \
-    export PATH="$PATH:/root/.cargo/bin" && \
-    rustup component add rust-src --toolchain nightly
-
-# Install llvm-tools and bootimage
-RUN export PATH="$PATH:/root/.cargo/bin" && \
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly && \
+    . $HOME/.cargo/env && \
+    rustup component add rust-src --toolchain nightly && \
     rustup component add llvm-tools-preview --toolchain nightly && \
     cargo install bootimage
+
+# Add cargo bin to PATH permanently
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Set working directory
+WORKDIR /app
