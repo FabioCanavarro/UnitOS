@@ -23,12 +23,12 @@ jobs:
       run: cargo install bootimage
     - name: Build
       run: cargo build --verbose
-    - name: Run tests
+    - name: Run tests (Invoke qemu-x86_64)
       run: |
         export CARGO_MANIFEST_DIR=$(pwd)
         cargo bootimage --target x86_64-unit_os.json
 
-        qemu-system-x86_64 \
+        qemu-x86_64 \
           -drive format=raw,file=target/x86_64-unit_os/debug/bootimage-rusty_os.bin \
           -no-reboot \
           -device isa-debug-exit,iobase=0xf4,iosize=0x04 \
