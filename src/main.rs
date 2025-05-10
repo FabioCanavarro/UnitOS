@@ -6,11 +6,9 @@
 
 pub mod serial;
 pub mod vga;
+pub mod test_trait;
 
-#[cfg(test)]
-mod tests;
-
-use tests::Tests;
+use test_trait::Tests;
 use core::panic::PanicInfo;
 use x86_64::instructions::port::Port;
 
@@ -63,7 +61,7 @@ pub fn test_runner(tests: &[&dyn Tests]) {
     for test in tests {
         test.run();
     }
-   serial_print!("\n");
+    serial_print!("\n");
     serial_println!("Exit Code: 1");
     serial_println!("Success\n");
 
