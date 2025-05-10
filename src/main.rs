@@ -6,6 +6,8 @@
 
 use core::panic::PanicInfo;
 
+use x86_64::instructions::port::Port;
+
 mod vga;
 mod tests;
 
@@ -51,6 +53,47 @@ pub fn test_runner(tests: &[&dyn Fn()]) {
         println!("");
         test();
     }
+    exit_qemu(QemuExitCode::Success);
 }
+
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[repr(u32)]
+enum QemuExitCode {
+    Success,
+    Failed
+}
+
+impl From<QemuExitCode> for u32 {
+    fn from(value: QemuExitCode) -> Self {
+        match value {
+            QemuExitCode::Success => 0x10,
+            QemuExitCode::Failed => 0x11
+        }
+    }
+}
+
+fn exit_qemu(exit_code: QemuExitCode) {
+    unsafe {
+        let mut port = Port::new(0xf4);
+        port.write(exit_code as u32);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
