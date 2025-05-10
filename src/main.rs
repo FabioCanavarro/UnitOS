@@ -63,7 +63,7 @@ pub fn test_runner(tests: &[&dyn Tests]) {
     for test in tests {
         test.run();
     }
-    serial_print!("\n");
+   serial_print!("\n");
     serial_println!("Exit Code: 1");
     serial_println!("Success\n");
 
