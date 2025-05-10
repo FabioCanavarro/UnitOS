@@ -17,8 +17,13 @@ jobs:
     
     - name: Build Docker Image
       run: docker build -t my-custom-os-dev-image . -f Dockerfile
-    
-    - name: Build and Test
+    - name: Cargo Build
+      run: |
+        docker run --rm -v $(pwd):/app my-custom-os-dev-image /bin/bash -c "
+          cd /app && 
+          cargo build --target x86_64-unit_os.json
+        "
+    - name: Cargo Test
       run: |
         docker run --rm -v $(pwd):/app my-custom-os-dev-image /bin/bash -c "
           cd /app && 
