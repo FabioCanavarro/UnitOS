@@ -3,7 +3,7 @@ use super::*;
 
 #[test_case]
 fn test_println_output() {
-    let s = "Some test string that fits on a single line";
+    let s = "Testing!!!";
     println!("{}", s);
     for (i, c) in s.chars().enumerate() {
         let screen_char = WRITER.lock().buffer.chars[BUFFER_HEIGHT as usize - 2][i].read();
