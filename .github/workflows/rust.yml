@@ -24,11 +24,7 @@ jobs:
       run: rustup component add llvm-tools-preview
     - name: Adding bootimage lib
       run: cargo install bootimage
-    - name: Build Bootable Image
-      run: cargo bootimage --target x86_64-unit_os.json
     - name: Build
       run: cargo build --verbose
-    - name: List Target Directory Contents
-      run: ls -R target/x86_64-unit_os/debug/deps
-    - name: Run tests
-      run: cargo test --verbose
+    - name: Run tests with custom script
+      run: ./run_tests.sh
