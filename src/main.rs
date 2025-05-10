@@ -4,12 +4,15 @@
 #![test_runner(crate::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
-use core::panic::PanicInfo;
+pub mod serial;
+pub mod vga;
 
-use x86_64::instructions::port::Port;
-
+#[cfg(test)]
 mod tests;
-mod vga;
+
+use tests::Tests;
+use core::panic::PanicInfo;
+use x86_64::instructions::port::Port;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
@@ -30,7 +33,7 @@ pub extern "C" fn _start() -> ! {
         }
     */
 
-    println!("UnitOs\n\n");
+    println!("UnitOs");
 
     // Running all tests
     #[cfg(test)]
@@ -39,6 +42,7 @@ pub extern "C" fn _start() -> ! {
     loop {}
 }
 
+#[cfg(not(test))]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
@@ -46,12 +50,23 @@ fn panic(info: &PanicInfo) -> ! {
 }
 
 #[cfg(test)]
-pub fn test_runner(tests: &[&dyn Fn()]) {
-    println!("Running {} tests", tests.len());
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! {
+    println!("Error: {}\n", info);
+    exit_qemu(QemuExitCode::Failed);
+    loop {}
+}
+
+#[cfg(test)]
+pub fn test_runner(tests: &[&dyn Tests]) {
+    serial_println!("Running {} tests\n", tests.len());
     for test in tests {
-        println!("");
-        test();
+        test.run();
     }
+    serial_print!("\n");
+    serial_println!("Exit Code: 1");
+    serial_println!("Success\n");
+
     exit_qemu(QemuExitCode::Success);
 }
 

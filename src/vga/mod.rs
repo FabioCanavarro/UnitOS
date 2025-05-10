@@ -8,6 +8,9 @@ use volatile::Volatile;
 pub mod char;
 pub mod color;
 
+#[cfg(test)]
+pub mod test;
+
 const BUFFER_HEIGHT: u8 = 25;
 const BUFFER_WIDTH: u8 = 80;
 
