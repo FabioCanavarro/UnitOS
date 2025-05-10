@@ -1,4 +1,5 @@
 #![no_std]
+#![no_main]
 #![feature(custom_test_frameworks)]
 #![test_runner(crate::test_runner)]
 #![reexport_test_harness_main = "test_main"]
@@ -12,28 +13,9 @@ use test_trait::Tests;
 use core::panic::PanicInfo;
 use x86_64::instructions::port::Port;
 
+#[cfg(test)]
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
-    /*
-        * NOTE: From my understanding
-        * the index starts from 0 so
-        * the 0xb8000 should be the first u8 of Hello
-        * 0 * 2 + 1 = 1, to put the color code infront
-        * then continue on from there
-
-        for (i,&byte) in HELLO.iter().enumerate(){
-            let step: isize = i as isize * 2;
-            unsafe {
-                *vga_buffer.offset(step) = byte;
-                *vga_buffer.offset(step + 1) = 0xb;
-
-            };
-        }
-    */
-
-    println!("UnitOs");
-
-    // Running all tests
     #[cfg(test)]
     test_main();
 
@@ -43,9 +25,10 @@ pub extern "C" fn _start() -> ! {
 #[cfg(test)]
 #[panic_handler]
 pub fn panic(info: &PanicInfo) -> ! {
-    println!("Error: {}\n", info);
+    serial_println!("Error: {}\n", info);
     exit_qemu(QemuExitCode::Failed);
     loop {}
+
 }
 
 pub fn test_runner(tests: &[&dyn Tests]) {
