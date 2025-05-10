@@ -5,8 +5,8 @@
 #![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
-
 use x86_64::instructions::port::Port;
+use tests::Tests;
 
 pub mod serial;
 mod vga;
@@ -59,10 +59,10 @@ fn panic(info: &PanicInfo) -> ! {
 }
 
 #[cfg(test)]
-pub fn test_runner(tests: &[&dyn Fn()]) {
+pub fn test_runner(tests: &[&dyn Tests]) {
     serial_println!("Running {} tests\n", tests.len());
     for test in tests {
-        test();
+        test.run();
     }
     serial_println!("\n");
     serial_println!("Exit Code: 1");
