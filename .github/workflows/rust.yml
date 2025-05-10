@@ -10,25 +10,19 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: test-image
     steps:
     - uses: actions/checkout@v4
-    - name: Docker Setup QEMU
-      id: qemu-setup
-      uses: docker/setup-qemu-action@v3.6.0
-    - name: Adding nightly toolchain
-      run: rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
-    - name: Adding llvm tools
-      run: rustup component add llvm-tools-preview
-    - name: Adding bootimage lib
-      run: cargo install bootimage
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests (Invoke qemu-x86_64)
+    - name: Build Docker Image
+      run: docker build -t test-image . -f Dockerfile
+    - name: Build Rust OS
+      run: cargo build --verbose --target x86_64-unit_os.json
+    - name: Run tests
       run: |
         export CARGO_MANIFEST_DIR=$(pwd)
         cargo bootimage --target x86_64-unit_os.json
-
-        qemu-x86_64 \
+        qemu-system-x86_64 \
           -drive format=raw,file=target/x86_64-unit_os/debug/bootimage-rusty_os.bin \
           -no-reboot \
           -device isa-debug-exit,iobase=0xf4,iosize=0x04 \
