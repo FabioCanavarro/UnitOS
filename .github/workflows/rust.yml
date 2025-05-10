@@ -19,9 +19,7 @@ jobs:
     - name: Setup QEMU
       uses: docker/setup-qemu-action@v3.6.0
     - name: Set up environment for QEMU
-      run: |
-        echo "PATH=$PATH" >> $GITHUB_ENV
-        echo "QEMU_PLATFORMS=${{ steps.qemu-setup.outputs.platforms }}" >> $GITHUB_ENV
+      run: echo "QEMU_BIN=${{ steps.qemu-setup.outputs.qemu-system-x86_64 }}" >> $GITHUB_ENV
     - name: Adding nightly toolchain
       run: rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
     - name: Adding llvm tools
