@@ -15,7 +15,7 @@ jobs:
     - name: Build Docker Image
       run: docker build -t my-custom-os-dev-image . -f Dockerfile
     - name: Start Docker Container
-      uses: docker/compose-action@v4
+      uses: hoverkraft-tech/compose-action@v2.2.0
       with:
         services: my-custom-os-dev-image
         build: .
