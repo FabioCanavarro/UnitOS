@@ -65,6 +65,9 @@ pub fn test_runner(tests: &[&dyn Fn()]) {
         test();
     }
     serial_println!("\n");
+    serial_println!("Exit Code: 1");
+    serial_println!("Success\n");
+
     exit_qemu(QemuExitCode::Success);
 }
 
