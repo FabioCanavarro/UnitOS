@@ -1,6 +1,5 @@
-use core::fmt;
 use crate::serial::SERIAL1;
-
+use core::fmt;
 
 #[macro_export]
 macro_rules! serial_print {

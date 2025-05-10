@@ -1,5 +1,5 @@
-use crate::*;
 use super::*;
+use crate::*;
 
 #[test_case]
 fn test_println_output() {
@@ -17,7 +17,7 @@ fn test_multi_line_print() {
     let s2 = "Testing2nd!!!";
 
     println!("{}", s);
-    println!("{}",s2);
+    println!("{}", s2);
 
     // 1st line
     for (i, c) in s.chars().enumerate() {

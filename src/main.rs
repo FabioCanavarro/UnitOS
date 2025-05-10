@@ -5,9 +5,9 @@
 #![reexport_test_harness_main = "test_main"]
 #![allow(unused_imports)]
 
-use rusty_os::{exit_qemu, println, QemuExitCode,test_runner};
-use rusty_os::test_trait::Tests;
 use core::panic::PanicInfo;
+use rusty_os::test_trait::Tests;
+use rusty_os::{QemuExitCode, exit_qemu, println, test_runner};
 use x86_64::instructions::port::Port;
 
 #[unsafe(no_mangle)]
@@ -48,9 +48,7 @@ fn panic(info: &PanicInfo) -> ! {
 #[cfg(test)]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-
     println!("Error: {}\n", info);
     exit_qemu(QemuExitCode::Failed);
     loop {}
 }
-

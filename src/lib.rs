@@ -6,11 +6,11 @@
 #![allow(unused_imports)]
 
 pub mod serial;
-pub mod vga;
 pub mod test_trait;
+pub mod vga;
 
-use test_trait::Tests;
 use core::panic::PanicInfo;
+use test_trait::Tests;
 use x86_64::instructions::port::Port;
 
 #[cfg(test)]
@@ -25,7 +25,6 @@ pub extern "C" fn _start() -> ! {
 pub fn test_panic_handler(info: &PanicInfo) {
     serial_println!("Error: {}\n", info);
     exit_qemu(QemuExitCode::Failed);
-
 }
 
 #[cfg(test)]
@@ -33,7 +32,6 @@ pub fn test_panic_handler(info: &PanicInfo) {
 pub fn panic(info: &PanicInfo) -> ! {
     test_panic_handler(info);
     loop {}
-
 }
 
 pub fn test_runner(tests: &[&dyn Tests]) {
