@@ -18,8 +18,27 @@ jobs:
     - uses: actions/checkout@v4
     - name: Setup QEMU
       uses: docker/setup-qemu-action@v3.6.0
-    - name: Set up environment for QEMU
-      run: echo "QEMU_BIN=${{ steps.qemu-setup.outputs.qemu-system-x86_64 }}" >> $GITHUB_ENV
+    - name: Find QEMU Executable (Attempt 1)
+      run: |
+        QEMU_PATH=$(which qemu-system-x86_64)
+        if [ -n "$QEMU_PATH" ]; then
+          echo "QEMU_BIN=$QEMU_PATH" >> $GITHUB_ENV
+          echo "Found QEMU at: $QEMU_PATH"
+        else
+          echo "QEMU not found in PATH. Trying to find it..."
+          find /usr/local /usr/bin /opt -name "qemu-system-x86_64" -executable -print0 | while IFS= read -r -d $'\0' QEMU_PATH
+          do
+            if [ -n "$QEMU_PATH" ]; then
+              echo "QEMU_BIN=$QEMU_PATH" >> $GITHUB_ENV
+              echo "Found QEMU at: $QEMU_PATH"
+              break
+            fi
+          done
+          if [ -z "$QEMU_BIN" ]; then
+            echo "Error: Could not find qemu-system-x86_64."
+            exit 1
+          fi
+        fi
     - name: Adding nightly toolchain
       run: rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu
     - name: Adding llvm tools
