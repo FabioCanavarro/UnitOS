@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Adding components
-      run: rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu;rustup component add llvm-tools-preview; cargo install bootimage
+      run: rustup component add rust-src --toolchain nightly-x86_64-unknown-linux-gnu;rustup component add llvm-tools-preview; cargo install bootimage; apt-get install qemu-system
     - name: Build
       run: cargo build --verbose
     - name: Run tests
