@@ -3,6 +3,7 @@
 #![feature(custom_test_frameworks)]
 #![test_runner(crate::test_runner)]
 #![reexport_test_harness_main = "test_main"]
+#![allow(unused_imports)]
 
 pub mod serial;
 pub mod vga;
@@ -68,6 +69,7 @@ pub fn test_runner(tests: &[&dyn Tests]) {
     exit_qemu(QemuExitCode::Success);
 }
 
+#[allow(dead_code)]
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 #[repr(u32)]
 enum QemuExitCode {
@@ -84,6 +86,7 @@ impl From<QemuExitCode> for u32 {
     }
 }
 
+#[allow(dead_code)]
 fn exit_qemu(exit_code: QemuExitCode) {
     unsafe {
         let mut port = Port::new(0xf4);
