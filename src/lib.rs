@@ -11,7 +11,6 @@ pub mod test_trait;
 pub mod vga;
 
 use core::panic::PanicInfo;
-use handler::InterruptDescriptorTable;
 use test_trait::Tests;
 use x86_64::instructions::port::Port;
 
