@@ -3,10 +3,11 @@ use crate::*;
 pub trait Tests {
     fn run(&self);
 }
-impl<T> Tests for  T
-where T: Fn() 
+impl<T> Tests for T
+where
+    T: Fn(),
 {
-    fn run(&self){
+    fn run(&self) {
         serial_print!("{}....\t", core::any::type_name::<T>());
         self();
         serial_print!("[ok]\n")
@@ -17,5 +18,3 @@ where T: Fn()
 fn tassert() {
     assert_eq!(1, 1);
 }
-
-

@@ -7,22 +7,20 @@ use volatile::Volatile;
 
 pub mod char;
 pub mod color;
+pub mod macros;
 
-#[cfg(test)]
-pub mod test;
-
-const BUFFER_HEIGHT: u8 = 25;
-const BUFFER_WIDTH: u8 = 80;
+pub const BUFFER_HEIGHT: u8 = 25;
+pub const BUFFER_WIDTH: u8 = 80;
 
 #[repr(transparent)]
 pub struct Buffer {
-    chars: [[Volatile<ScreenChar>; BUFFER_WIDTH as usize]; BUFFER_HEIGHT as usize],
+    pub chars: [[Volatile<ScreenChar>; BUFFER_WIDTH as usize]; BUFFER_HEIGHT as usize],
 }
 
 pub struct Writer {
-    column_pos: u8,
+    pub column_pos: u8,
     color_code: ColorCode,
-    buffer: &'static mut Buffer,
+    pub buffer: &'static mut Buffer,
 }
 
 impl Writer {
@@ -105,24 +103,4 @@ lazy_static! {
     });
 }
 
-/* NOTE: These are from the rust source,
- * the print and the _print is modified
- * the _print is my function which writes down the arg given by print!
- */
 
-#[macro_export]
-macro_rules! print {
-    ($($arg:tt)*) => ($crate::vga::_print(format_args!($($arg)*)));
-}
-
-#[macro_export]
-macro_rules! println {
-    () => ($crate::print!("\n"));
-    ($($arg:tt)*) => ($crate::print!("{}\n", format_args!($($arg)*)));
-}
-
-#[doc(hidden)]
-pub fn _print(args: fmt::Arguments) {
-    use core::fmt::Write;
-    WRITER.lock().write_fmt(args).unwrap();
-}

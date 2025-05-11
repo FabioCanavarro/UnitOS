@@ -5,12 +5,9 @@
 #![reexport_test_harness_main = "test_main"]
 #![allow(unused_imports)]
 
-pub mod serial;
-pub mod vga;
-pub mod test_trait;
-
-use test_trait::Tests;
 use core::panic::PanicInfo;
+use rusty_os::test_trait::Tests;
+use rusty_os::{QemuExitCode, exit_qemu, println, test_runner};
 use x86_64::instructions::port::Port;
 
 #[unsafe(no_mangle)]
@@ -54,42 +51,4 @@ fn panic(info: &PanicInfo) -> ! {
     println!("Error: {}\n", info);
     exit_qemu(QemuExitCode::Failed);
     loop {}
-}
-
-#[cfg(test)]
-pub fn test_runner(tests: &[&dyn Tests]) {
-    serial_println!("Running {} tests\n", tests.len());
-    for test in tests {
-        test.run();
-    }
-    serial_print!("\n");
-    serial_println!("Exit Code: 1");
-    serial_println!("Success\n");
-
-    exit_qemu(QemuExitCode::Success);
-}
-
-#[allow(dead_code)]
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
-#[repr(u32)]
-enum QemuExitCode {
-    Success,
-    Failed,
-}
-
-impl From<QemuExitCode> for u32 {
-    fn from(value: QemuExitCode) -> Self {
-        match value {
-            QemuExitCode::Success => 0x10,
-            QemuExitCode::Failed => 0x11,
-        }
-    }
-}
-
-#[allow(dead_code)]
-fn exit_qemu(exit_code: QemuExitCode) {
-    unsafe {
-        let mut port = Port::new(0xf4);
-        port.write(exit_code as u32);
-    }
 }

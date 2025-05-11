@@ -1,5 +1,24 @@
-use crate::*;
-use super::*;
+#![no_std]
+#![no_main]
+#![feature(custom_test_frameworks)]
+#![test_runner(rusty_os::test_runner)]
+#![reexport_test_harness_main = "test_main"]
+
+use core::panic::PanicInfo;
+
+use rusty_os::{println, test_panic_handler, vga::{BUFFER_HEIGHT, WRITER}};
+
+#[unsafe(no_mangle)]
+pub extern "C" fn _start() -> ! {
+    test_main();
+    loop {}
+}
+
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! {
+    test_panic_handler(info);
+    loop {}
+}
 
 #[test_case]
 fn test_println_output() {
@@ -17,7 +36,7 @@ fn test_multi_line_print() {
     let s2 = "Testing2nd!!!";
 
     println!("{}", s);
-    println!("{}",s2);
+    println!("{}", s2);
 
     // 1st line
     for (i, c) in s.chars().enumerate() {
