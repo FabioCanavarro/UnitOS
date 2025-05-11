@@ -5,12 +5,13 @@
 #![reexport_test_harness_main = "test_main"]
 #![allow(unused_imports)]
 
+pub mod handler;
 pub mod serial;
 pub mod test_trait;
 pub mod vga;
-pub mod handler;
 
 use core::panic::PanicInfo;
+use handler::InterruptDescriptorTable;
 use test_trait::Tests;
 use x86_64::instructions::port::Port;
 
