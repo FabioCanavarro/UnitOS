@@ -9,9 +9,6 @@ pub mod char;
 pub mod color;
 pub mod macros;
 
-#[cfg(test)]
-pub mod test;
-
 pub const BUFFER_HEIGHT: u8 = 25;
 pub const BUFFER_WIDTH: u8 = 80;
 
