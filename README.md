@@ -43,7 +43,7 @@ or
    ```
 ##  Further Development
 
-This is a very basic starting point.  Here are some ideas for expanding this kernel:
+Possible new features:
 
 * **More drivers:** Add drivers for other hardware devices, such as the keyboard, disk, and network interface.
 * **Memory management:** Implement a memory management system to allocate and deallocate memory.
@@ -52,6 +52,3 @@ This is a very basic starting point.  Here are some ideas for expanding this ker
 * **File system:** Design a simple file system.
 * **Multitasking:** Implement a basic scheduler to allow multiple programs to run concurrently.
 
-##  Disclaimer
-
-This project is for educational purposes only.  It's not intended for production use.
