@@ -1,5 +1,7 @@
 # UnitOS: Rust Bare-Bones OS
 
+[![Rust](https://github.com/FabioCanavarro/UnitOS/actions/workflows/rust.yml/badge.svg)](https://github.com/FabioCanavarro/UnitOS/actions/workflows/rust.yml)
+
 This is a simple, hobby operating system kernel written in Rust. It's designed for x86_64 architecture
 
 ## Features
