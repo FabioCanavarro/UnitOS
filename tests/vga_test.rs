@@ -6,7 +6,7 @@
 
 use core::panic::PanicInfo;
 
-use rusty_os::{println, test_panic_handler};
+use rusty_os::{println, test_panic_handler, vga::{BUFFER_HEIGHT, WRITER}};
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {

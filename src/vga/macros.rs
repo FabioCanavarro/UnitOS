@@ -3,9 +3,12 @@
  * the _print is my function which writes down the arg given by print!
  */
 
+use core::fmt;
+use super::WRITER;
+
 #[macro_export]
 macro_rules! print {
-    ($($arg:tt)*) => ($crate::vga::_print(format_args!($($arg)*)));
+    ($($arg:tt)*) => ($crate::vga::macros::_print(format_args!($($arg)*)));
 }
 
 #[macro_export]
