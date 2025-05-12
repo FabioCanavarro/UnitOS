@@ -8,6 +8,7 @@ This is a simple, hobby operating system kernel written in Rust. It's designed f
 
 * **Bare-Bones Kernel:** A minimal kernel implementation.
 * **VGA Text Output:** Writes text directly to the VGA buffer for display.
+* **Intergrated Tests:** Be able to write intergrated tests or even unit tests.
 
 ## Build and Run Instructions
 
