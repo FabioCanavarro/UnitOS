@@ -1,18 +1,14 @@
+use lazy_static::lazy_static;
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 use crate::println;
 
-
-static mut IDT : InterruptDescriptorTable = InterruptDescriptorTable::new();
-
-fn idt_init(){
-    unsafe {
-        #[allow(static_mut_refs)]
-        IDT.breakpoint.set_handler_fn(breakpoint_handler);
-
-        #[allow(static_mut_refs)]
-        IDT.load();
-    }
-}
+lazy_static!(
+    static ref IDT: InterruptDescriptorTable = {
+        let mut idt: InterruptDescriptorTable = InterruptDescriptorTable::new();
+        idt.breakpoint.set_handler_fn(breakpoint_handler);
+        idt 
+    };
+);
 
 // Handler Funcs
 extern "x86-interrupt"
