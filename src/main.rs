@@ -37,7 +37,6 @@ pub extern "C" fn _start() -> ! {
     // NOTE: Breakpoint exception
     interrupts::int3();
 
-    // NOTE: HANDLED the exception perfectly, yeahya
     println!("here");
 
     // Running all tests
