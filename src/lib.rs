@@ -72,3 +72,7 @@ pub fn exit_qemu(exit_code: QemuExitCode) {
         port.write(exit_code as u32);
     }
 }
+
+pub fn init() {
+    handler::interrupt_table::init_idt();
+}
