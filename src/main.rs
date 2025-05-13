@@ -8,6 +8,7 @@
 use core::panic::PanicInfo;
 use rusty_os::test_trait::Tests;
 use rusty_os::{QemuExitCode, exit_qemu, println, test_runner};
+use x86_64::instructions::interrupts;
 use x86_64::instructions::port::Port;
 
 #[unsafe(no_mangle)]
@@ -30,6 +31,13 @@ pub extern "C" fn _start() -> ! {
     */
 
     println!("UnitOs");
+
+    rusty_os::init();
+
+    // NOTE: Breakpoint exception
+    interrupts::int3();
+
+    println!("here");
 
     // Running all tests
     #[cfg(test)]

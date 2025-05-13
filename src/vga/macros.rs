@@ -3,8 +3,8 @@
  * the _print is my function which writes down the arg given by print!
  */
 
-use core::fmt;
 use super::WRITER;
+use core::fmt;
 
 #[macro_export]
 macro_rules! print {
