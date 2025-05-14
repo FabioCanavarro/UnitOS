@@ -61,7 +61,8 @@ pub extern "C" fn _start() -> ! {
         // accessing at 0xFFFFFFFFFFFFFFF which is invalid, cuz way too high
          *(0xFFFFFFFFFFFFFFF as *mut u8) = 42;
 
-        // NOTE:  Causes inifinite device restarting
+        // NOTE:  Causes inifinite device restarting since there is no double fault handler func,
+        // which causes triple fault restarting
     }
 
     loop {}
