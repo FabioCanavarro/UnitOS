@@ -39,21 +39,30 @@ pub extern "C" fn _start() -> ! {
 
     println!("here");
 
+    /*
+        unsafe {
+            // Fails here because accessing invalid address
+            *(0x10000 as *mut u8) = 23;
 
+            
+            // NOTE: set a memory adress at the most recent stack to 0x10000 or 65536 then get its reference
+            // "&" and then reads it using "*"
+            //
+            // println!("{:?}",*(&0x10000));
+            
+            // Reads at adress 0x10000
+            let l: *const u8 = 0x10000 as *const u8;
+            println!("{:?}",*l);
+        };
+    */
+
+    // NOTE: Triggering a Page fault error, that has no handler function
     unsafe {
-        // Fails here because accessing invalid address
-        *(0x10000 as *mut u8) = 23;
+        // accessing at 0xFFFFFFFFFFFFFFF which is invalid, cuz way too high
+         *(0xFFFFFFFFFFFFFFF as *mut u8) = 42;
 
-        
-        // NOTE: set a memory adress at the most recent stack to 0x10000 or 65536 then get its reference
-        // "&" and then reads it using "*"
-        //
-        // println!("{:?}",*(&0x10000));
-        
-        // Reads at adress 0x10000
-        let l: *const u8 = 0x10000 as *const u8;
-        println!("{:?}",*l);
-    };
+        // NOTE:  Causes inifinite device restarting
+    }
 
     loop {}
 }
