@@ -14,21 +14,21 @@ lazy_static! {
     };
 }
 
-
 pub fn init_idt() {
     IDT.load();
 }
 
 // Handler Funcs
-extern "x86-interrupt"
-fn breakpoint_handler(stack_frame: InterruptStackFrame) {
+extern "x86-interrupt" fn breakpoint_handler(stack_frame: InterruptStackFrame) {
     println!("EXCEPTION: BREAKPOINT\n{:?}", stack_frame)
 }
 
-extern "x86-interrupt"
-fn double_fault_handler(
+extern "x86-interrupt" fn double_fault_handler(
     stack_frame: InterruptStackFrame,
-    error_code: u64
+    error_code: u64,
 ) -> ! {
-    panic!("EXCEPTION: DOUBLE FAULT\n{:#?}\n error_code: \t{:#?}", stack_frame,error_code);
+    panic!(
+        "EXCEPTION: DOUBLE FAULT\n{:#?}\n error_code: \t{:#?}",
+        stack_frame, error_code
+    );
 }
