@@ -74,6 +74,8 @@ pub extern "C" fn _start() -> ! {
 
     // trigger a stack overflow
     stack_overflow();
+    // NOTE: Causes a triple fault, cuz double fault need to push to stack, and stack already overflowed
+    // which causes another exception
 
     loop {}
 }
