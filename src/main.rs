@@ -68,6 +68,12 @@ pub extern "C" fn _start() -> ! {
 
     // TODO: What will happen if stack overflow, since the double fault handler need to push it to the
     // stack what will happen actually?
+    fn stack_overflow() {
+        stack_overflow(); // for each recursion, the return address is pushed
+    }
+
+    // trigger a stack overflow
+    stack_overflow();
 
     loop {}
 }
