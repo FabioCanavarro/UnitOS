@@ -56,15 +56,18 @@ pub extern "C" fn _start() -> ! {
         };
     */
     // NOTE: Triggering a Page fault error, that has no handler function
+    /*
+        unsafe {
+            // accessing at 0xFFFFFFFFFFFFFFF which is invalid, cuz way too high
+             *(0xFFFFFFFFFFFFFFF as *mut u8) = 42;
 
-    unsafe {
-        // accessing at 0xFFFFFFFFFFFFFFF which is invalid, cuz way too high
-         *(0xFFFFFFFFFFFFFFF as *mut u8) = 42;
+            // NOTE:  Causes inifinite device restarting since there is no double fault handler func,
+            // which causes triple fault restarting
+        }
+    */
 
-        // NOTE:  Causes inifinite device restarting since there is no double fault handler func,
-        // which causes triple fault restarting
-    }
-
+    // TODO: What will happen if stack overflow, since the double fault handler need to push it to the
+    // stack what will happen actually?
 
     loop {}
 }
