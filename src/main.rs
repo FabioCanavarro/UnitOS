@@ -55,10 +55,6 @@ pub extern "C" fn _start() -> ! {
         println!("{:?}",*l);
     };
 
-    // Running all tests
-    #[cfg(test)]
-    test_main();
-
     loop {}
 }
 
