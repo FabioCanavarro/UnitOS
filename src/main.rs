@@ -52,7 +52,7 @@ pub extern "C" fn _start() -> ! {
         
         // Reads at adress 0x10000
         let l: *const u8 = 0x10000 as *const u8;
-        println!("{:?}",l);
+        println!("{:?}",*l);
     };
 
     // Running all tests
