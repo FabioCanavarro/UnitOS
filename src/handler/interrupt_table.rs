@@ -30,6 +30,5 @@ fn double_fault_handler(
     stack_frame: InterruptStackFrame,
     error_code: u64
 ) -> ! {
-    println!("EXCEPTION: DOUBLE FAULT\n{:#?}\n error_code: \t{:#?}", stack_frame,error_code);
-    panic!("");
+    panic!("EXCEPTION: DOUBLE FAULT\n{:#?}\n error_code: \t{:#?}", stack_frame,error_code);
 }
