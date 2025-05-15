@@ -10,6 +10,7 @@ pub mod handler;
 pub mod serial;
 pub mod test_trait;
 pub mod vga;
+pub mod gdt;
 
 use core::panic::PanicInfo;
 use test_trait::Tests;
