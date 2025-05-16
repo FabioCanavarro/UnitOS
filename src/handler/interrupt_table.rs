@@ -10,8 +10,8 @@ lazy_static! {
         let mut idt: InterruptDescriptorTable = InterruptDescriptorTable::new();
         idt.breakpoint.set_handler_fn(breakpoint_handler);
         idt
-    }
-};
+    };
+}
 
 pub fn init_idt() {
     IDT.load();
