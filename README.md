@@ -32,14 +32,7 @@ Since this is a very basic OS, you'll need a way to compile it and run it in an 
     cargo build --target x86_64-unknown-none
     ```
 
-4.  **Run with QEMU**
-    ```bash
-    qemu-system-x86_64 -kernel target/x86_64-unknown-none/debug/your_kernel_name
-    ```
-
-or 
-
-3. **Run and build with cargo**
+4. **Run and build with cargo**
    ```bash
    cargo run
    ```
