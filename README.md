@@ -17,7 +17,7 @@ Since this is a very basic OS, you'll need a way to compile it and run it in an 
 
 1.  **Prerequisites:**
     * Rust (nightly is recommended)
-    * bootimage (as current version is needed and the project uses an older version)
+    * bootimage (as latest version is needed but the project uses an older version)
     * Qemu (Needed unless ran in a real hardware)
 
 2.  **Clone the repository:**
@@ -40,12 +40,11 @@ Since this is a very basic OS, you'll need a way to compile it and run it in an 
 
 Possible new features:
 
-* **More drivers:** Add drivers for other hardware devices, such as the keyboard, disk, and network interface.
-* **Memory management:** Implement a memory management system to allocate and deallocate memory.
-* **Interrupt handling:** Set up interrupt handlers to respond to hardware interrupts.
+* **More drivers:** Add drivers for other hardware devices, such as the keyboard, disk, and network interface
+* **Memory management:** Implement a memory management system to allocate and deallocate memory
+* **Interrupt handling:** Set up interrupt handlers to respond to hardware interrupts
 * **Basic input:** Implement keyboard input.
-* **File system:** Design a simple file system.
-* **Multitasking:** Implement a basic scheduler to allow multiple programs to run concurrently.
-* **Screen Drawing:** Implement a class for drawing at the screen.
-* **Paging:** Implement paging.
+* **File system:** Design a simple file system
+* **Multitasking:** Implement a basic scheduler to allow multiple programs to run concurrently
+* **Screen Drawing:** Implement a class for drawing at the screen
 
