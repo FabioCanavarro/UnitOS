@@ -36,6 +36,7 @@ Since this is a very basic OS, you'll need a way to compile it and run it in an 
    ```bash
    cargo run
    ```
+
 ##  Further Development
 
 Possible new features:
@@ -43,7 +44,7 @@ Possible new features:
 * **More drivers:** Add drivers for other hardware devices, such as the keyboard, disk, and network interface or perhaps even the mouse
 * **Memory management:** Implement a memory management system to allocate and deallocate memory
 * **Interrupt handling:** Set up interrupt handlers to respond to hardware interrupts
-* **Basic input:** Implement keyboard input.
+* **Basic input:** Implement keyboard input, perhaps even mouse input
 * **File system:** Design a simple file system
 * **Multitasking:** Implement a basic scheduler to allow multiple programs to run concurrently
 * **Screen Drawing:** Implement a class for drawing at the screen
