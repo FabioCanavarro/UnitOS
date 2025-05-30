@@ -9,7 +9,7 @@
 use core::panic::PanicInfo;
 
 use lazy_static::lazy_static;
-use rusty_os::{exit_qemu, gdt, serial_println, test_panic_handler};
+use rusty_os::{exit_qemu, gdt, serial_print, serial_println, test_panic_handler};
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
 #[unsafe(no_mangle)]
@@ -55,7 +55,7 @@ pub extern "x86-interrupt" fn test_double_fault_handler
     _stack_frame: InterruptStackFrame,
     _error_code: u64
 ) -> ! {
-    serial_println!("[ok]");
+    serial_print!("[ok]");
     exit_qemu(rusty_os::QemuExitCode::Success);
     loop {}
 }
