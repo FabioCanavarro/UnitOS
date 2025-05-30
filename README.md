@@ -47,4 +47,5 @@ Possible new features:
 * **File system:** Design a simple file system
 * **Multitasking:** Implement a basic scheduler to allow multiple programs to run concurrently
 * **Screen Drawing:** Implement a class for drawing at the screen
+* **Automatic Deployment:** Deploy to github automatically
 
