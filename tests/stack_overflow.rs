@@ -32,7 +32,7 @@ fn panic(info: &PanicInfo) -> ! {
     loop {}
 }
 
-lazy_static! {
+lazy_static! (
     static ref TEST_IDT: InterruptDescriptorTable = {
         let mut idt = InterruptDescriptorTable::new();
         unsafe {
@@ -42,7 +42,7 @@ lazy_static! {
         }
         idt
     };
-};
+);
 
 pub extern "x86-interrupt" fn test_double_fault_handler(
     _stack_frame: InterruptStackFrame,
