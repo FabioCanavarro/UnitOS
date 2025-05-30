@@ -39,6 +39,9 @@ pub extern "C" fn _start() -> ! {
 
     println!("here");
 
+    #[cfg(test)]
+    test_main();
+
     /*
         unsafe {
             // Fails here because accessing invalid address

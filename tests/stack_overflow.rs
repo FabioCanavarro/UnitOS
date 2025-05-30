@@ -15,7 +15,7 @@ use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
 
-    serial_println!("stack_overflow::stack_overflow...\t");
+    serial_print!("stack_overflow::stack_overflow....\t");
 
     gdt::init();
 
@@ -55,7 +55,7 @@ pub extern "x86-interrupt" fn test_double_fault_handler
     _stack_frame: InterruptStackFrame,
     _error_code: u64
 ) -> ! {
-    serial_print!("[ok]");
+    serial_println!("[ok]");
     exit_qemu(rusty_os::QemuExitCode::Success);
     loop {}
 }
