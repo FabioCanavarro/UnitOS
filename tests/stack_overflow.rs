@@ -16,7 +16,7 @@ use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 pub extern "C" fn _start() -> ! {
 
     gdt::init();
-    test_main();
+    stack_overflow_test();
     loop {}
 }
 
@@ -26,7 +26,6 @@ fn panic(info: &PanicInfo) -> ! {
     loop {}
 }
 
-#[test_case]
 #[allow(unconditional_recursion)]
 fn stack_overflow_test() {
     serial_println!("stack_overflow::stack_overflow...\t");
