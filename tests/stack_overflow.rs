@@ -15,8 +15,16 @@ use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
 
+    serial_println!("stack_overflow::stack_overflow...\t");
+
     gdt::init();
-    stack_overflow_test();
+
+    init_test_idt();
+
+    stack_overflow();
+
+    panic!("Continued to run this line, even after stack has overflowed");
+
     loop {}
 }
 
@@ -26,12 +34,7 @@ fn panic(info: &PanicInfo) -> ! {
     loop {}
 }
 
-#[allow(unconditional_recursion)]
-fn stack_overflow_test() {
-    serial_println!("stack_overflow::stack_overflow...\t");
-    stack_overflow();
-    panic!("Ran succesfully without crashing");
-}
+
 
 
 lazy_static!(
@@ -61,6 +64,7 @@ pub fn init_test_idt() {
     TEST_IDT.load();
 }
 
+#[allow(unconditional_recursion)]
 fn stack_overflow() {
     stack_overflow(); // for each recursion, the return address is pushed
     volatile::Volatile::new(0).read(); // prevent tail reduction optimization lol
