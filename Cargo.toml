@@ -26,5 +26,6 @@ test-timeout = 300 # It is in seconds, testcases Combined wont last more than 5 
 # 0001 0000 << 1 |
 # 0010 0001 is 32 + 1 = 33
 
-
-
+[[test]]
+name = "stack_overflow"
+harness= false

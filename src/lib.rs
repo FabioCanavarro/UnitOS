@@ -6,6 +6,7 @@
 #![reexport_test_harness_main = "test_main"]
 #![allow(unused_imports)]
 
+pub mod gdt;
 pub mod handler;
 pub mod serial;
 pub mod test_trait;
@@ -76,5 +77,6 @@ pub fn exit_qemu(exit_code: QemuExitCode) {
 }
 
 pub fn init() {
-    handler::interrupt_table::init_idt();
+    handler::interrupt_table::init();
+    gdt::init()
 }
