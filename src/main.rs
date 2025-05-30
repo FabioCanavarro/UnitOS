@@ -66,7 +66,6 @@ pub extern "C" fn _start() -> ! {
         }
     */
 
-    /*
         fn stack_overflow() {
             stack_overflow(); // for each recursion, the return address is pushed
         }
@@ -75,7 +74,6 @@ pub extern "C" fn _start() -> ! {
         stack_overflow();
         // NOTE: Causes a triple fault, cuz double fault need to push to stack, and stack already overflowed
         // which causes another exception
-    */
     loop {}
 }
 
