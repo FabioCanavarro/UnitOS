@@ -5,20 +5,20 @@
 #![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
-use rusty_os::{QemuExitCode, exit_qemu, serial_print, serial_println};
+use rusty_os::{exit_qemu, halt, serial_print, serial_println, QemuExitCode};
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
     serial_println!("[ok]");
     exit_qemu(QemuExitCode::Success);
-    loop {}
+    halt()
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
     test_main();
 
-    loop {}
+    halt()
 }
 
 pub fn test_runner(tests: &[&dyn Fn()]) {

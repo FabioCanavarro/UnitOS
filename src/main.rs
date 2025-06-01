@@ -7,7 +7,7 @@
 
 use core::panic::PanicInfo;
 use rusty_os::test_trait::Tests;
-use rusty_os::{QemuExitCode, exit_qemu, println, test_runner};
+use rusty_os::{exit_qemu, halt, println, test_runner, QemuExitCode};
 use x86_64::instructions::interrupts;
 use x86_64::instructions::port::Port;
 
@@ -19,14 +19,14 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    loop {}
+    halt()
 }
 
 #[cfg(not(test))]
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    halt()
 }
 
 #[cfg(test)]
@@ -34,5 +34,5 @@ fn panic(info: &PanicInfo) -> ! {
 fn panic(info: &PanicInfo) -> ! {
     println!("Error: {}\n", info);
     exit_qemu(QemuExitCode::Failed);
-    loop {}
+    halt()
 }

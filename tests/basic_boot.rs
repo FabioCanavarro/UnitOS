@@ -6,18 +6,18 @@
 
 use core::panic::PanicInfo;
 
-use rusty_os::{println, test_panic_handler};
+use rusty_os::{halt, println, test_panic_handler};
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
     test_main();
-    loop {}
+    halt()
 }
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     test_panic_handler(info);
-    loop {}
+    halt()
 }
 
 #[test_case]

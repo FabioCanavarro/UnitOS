@@ -25,7 +25,7 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    loop {}
+    halt()
 }
 
 pub fn test_panic_handler(info: &PanicInfo) {
@@ -37,7 +37,7 @@ pub fn test_panic_handler(info: &PanicInfo) {
 #[panic_handler]
 pub fn panic(info: &PanicInfo) -> ! {
     test_panic_handler(info);
-    loop {}
+    halt()
 }
 
 pub fn test_runner(tests: &[&dyn Tests]) {
@@ -84,4 +84,10 @@ pub fn init() {
         pic::PICS.lock().initialize();
     }
     interrupts::enable();
+}
+
+pub fn halt() -> ! {
+    loop {
+        x86_64::instructions::hlt();
+    }
 }

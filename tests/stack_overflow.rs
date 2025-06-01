@@ -8,7 +8,7 @@
 use core::panic::PanicInfo;
 
 use lazy_static::lazy_static;
-use rusty_os::{exit_qemu, gdt, serial_print, serial_println, test_panic_handler};
+use rusty_os::{exit_qemu, gdt, halt, serial_print, serial_println, test_panic_handler};
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
 #[unsafe(no_mangle)]
@@ -22,14 +22,12 @@ pub extern "C" fn _start() -> ! {
     stack_overflow();
 
     panic!("Continued to run this line, even after stack has overflowed");
-
-    loop {}
 }
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     test_panic_handler(info);
-    loop {}
+    halt()
 }
 
 lazy_static! (
@@ -50,7 +48,7 @@ pub extern "x86-interrupt" fn test_double_fault_handler(
 ) -> ! {
     serial_println!("[ok]");
     exit_qemu(rusty_os::QemuExitCode::Success);
-    loop {}
+    halt()
 }
 
 pub fn init_test_idt() {

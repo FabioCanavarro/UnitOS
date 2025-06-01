@@ -7,21 +7,21 @@
 use core::panic::PanicInfo;
 
 use rusty_os::{
-    println, test_panic_handler,
-    vga::{BUFFER_HEIGHT, WRITER},
+    halt, println, test_panic_handler, vga::{BUFFER_HEIGHT, WRITER}
 };
 use x86_64::instructions::interrupts;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
     test_main();
-    loop {}
+    halt()
 }
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     test_panic_handler(info);
     loop {}
+    halt()
 }
 
 #[test_case]
