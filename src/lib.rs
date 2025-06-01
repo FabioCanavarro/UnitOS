@@ -6,6 +6,7 @@
 #![reexport_test_harness_main = "test_main"]
 #![allow(unused_imports)]
 
+pub mod pic;
 pub mod gdt;
 pub mod handler;
 pub mod serial;
@@ -14,7 +15,7 @@ pub mod vga;
 
 use core::panic::PanicInfo;
 use test_trait::Tests;
-use x86_64::instructions::port::Port;
+use x86_64::instructions::{interrupts, port::Port};
 
 #[cfg(test)]
 #[unsafe(no_mangle)]
@@ -78,5 +79,9 @@ pub fn exit_qemu(exit_code: QemuExitCode) {
 
 pub fn init() {
     handler::interrupt_table::init();
-    gdt::init()
+    gdt::init();
+    unsafe {
+        pic::PICS.lock().initialize();
+    }
+    interrupts::enable();
 }
