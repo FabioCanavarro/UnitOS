@@ -45,8 +45,12 @@ extern "x86-interrupt" fn double_fault_handler(
 }
 
 extern "x86-interrupt" fn timer_handler(stack_frame: InterruptStackFrame) {
-    print!(".");
+    // NOTE: THIS forms a deadlock as its asynchrous
+    // It is never freed lol
     unsafe {
+        // NOTE: Reason why this runs infinitely is that
+        // when an interrupt happens, an EOI is sent which creates ends the current data sending by
+        // the timer
         PICS.lock().notify_end_of_interrupt(InterruptIndex::Timer.as_u8());
     }
 }
