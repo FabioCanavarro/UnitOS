@@ -33,12 +33,6 @@ pub extern "C" fn _start() -> ! {
     println!("UnitOs");
 
     rusty_os::init();
-
-    // NOTE: Breakpoint exception
-    interrupts::int3();
-
-    println!("here");
-
     #[cfg(test)]
     test_main();
 
