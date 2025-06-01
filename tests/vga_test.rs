@@ -28,15 +28,13 @@ fn panic(info: &PanicInfo) -> ! {
 fn test_println_output() {
     let s = "Testing!!!";
     println!("{}", s);
-    for (i, c) in s.chars().enumerate() {
-
-        // WARN: THIS IS A TEMPORARY FIXED, TO DISABLE INTERRUPTS
-        interrupts::without_interrupts(|| {
-                let screen_char = WRITER.lock().buffer.chars[BUFFER_HEIGHT as usize - 2][i].read();
-                assert_eq!(char::from(screen_char.char), c);
-            }
-        );
-    }
+     // WARN: THIS IS A TEMPORARY FIXED, TO DISABLE INTERRUPTS
+    interrupts::without_interrupts(|| {
+        for (i, c) in s.chars().enumerate() {
+           let screen_char = WRITER.lock().buffer.chars[BUFFER_HEIGHT as usize - 2][i].read();
+            assert_eq!(char::from(screen_char.char), c);
+        }
+    });
 }
 
 #[test_case]
@@ -48,21 +46,23 @@ fn test_multi_line_print() {
     println!("{}", s2);
 
     // 1st line
-    for (i, c) in s.chars().enumerate() {
-
-        // WARN: THIS IS A TEMPORARY FIXED, TO DISABLE INTERRUPTS
-        interrupts::without_interrupts(||{
+    
+    // WARN: THIS IS A TEMPORARY FIXED, TO DISABLE INTERRUPTS
+    interrupts::without_interrupts(||{
+        for (i, c) in s.chars().enumerate() {
             let char = WRITER.lock().buffer.chars[BUFFER_HEIGHT as usize - 3][i].read();
             assert_eq!(char::from(char.char), c);
-        });
-    }
+        }
+    });
 
     // 2nd line
-    for (i, c) in s2.chars().enumerate() {
-        // WARN: THIS IS A TEMPORARY FIXED, TO DISABLE INTERRUPTS
-        interrupts::without_interrupts(||{
+    
+    // WARN: THIS IS A TEMPORARY FIXED, TO DISABLE INTERRUPTS
+    interrupts::without_interrupts(||{
+
+        for (i, c) in s2.chars().enumerate() {
             let char = WRITER.lock().buffer.chars[BUFFER_HEIGHT as usize - 2][i].read();
             assert_eq!(char::from(char.char), c);
-        })
-    }
+        }
+    });
 }
