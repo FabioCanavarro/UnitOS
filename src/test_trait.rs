@@ -13,8 +13,3 @@ where
         serial_print!("[ok]\n")
     }
 }
-
-#[test_case]
-fn tassert() {
-    assert_eq!(1, 1);
-}
