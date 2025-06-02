@@ -1,5 +1,8 @@
-use crate::gdt;
-use crate::println;
+use core::usize;
+
+use crate::{gdt, pic::InterruptIndex};
+use crate::pic::PICS;
+use crate::{print, println};
 use lazy_static::lazy_static;
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
@@ -17,6 +20,7 @@ lazy_static! {
             // fault happens
             idt.double_fault.set_handler_fn(double_fault_handler).set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX as u16);
         }
+        idt[InterruptIndex::Timer.as_u8() as usize].set_handler_fn(timer_handler);
         idt
     };
 }
@@ -38,4 +42,16 @@ extern "x86-interrupt" fn double_fault_handler(
         "EXCEPTION: DOUBLE FAULT\n{:#?}\n error_code: \t{:#?}",
         stack_frame, error_code
     );
+}
+
+extern "x86-interrupt" fn timer_handler(stack_frame: InterruptStackFrame) {
+    // NOTE: THIS forms a deadlock as its asynchrous
+    // It is never freed lol
+    print!(".");
+    unsafe {
+        // NOTE: Reason why this runs infinitely is that
+        // when an interrupt happens, an EOI is sent which creates ends the current data sending by
+        // the timer
+        PICS.lock().notify_end_of_interrupt(InterruptIndex::Timer.as_u8());
+    }
 }

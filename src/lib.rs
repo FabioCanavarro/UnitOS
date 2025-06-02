@@ -6,6 +6,7 @@
 #![reexport_test_harness_main = "test_main"]
 #![allow(unused_imports)]
 
+pub mod pic;
 pub mod gdt;
 pub mod handler;
 pub mod serial;
@@ -14,7 +15,7 @@ pub mod vga;
 
 use core::panic::PanicInfo;
 use test_trait::Tests;
-use x86_64::instructions::port::Port;
+use x86_64::instructions::{interrupts, port::Port};
 
 #[cfg(test)]
 #[unsafe(no_mangle)]
@@ -24,7 +25,7 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    loop {}
+    halt()
 }
 
 pub fn test_panic_handler(info: &PanicInfo) {
@@ -36,7 +37,7 @@ pub fn test_panic_handler(info: &PanicInfo) {
 #[panic_handler]
 pub fn panic(info: &PanicInfo) -> ! {
     test_panic_handler(info);
-    loop {}
+    halt()
 }
 
 pub fn test_runner(tests: &[&dyn Tests]) {
@@ -78,5 +79,15 @@ pub fn exit_qemu(exit_code: QemuExitCode) {
 
 pub fn init() {
     handler::interrupt_table::init();
-    gdt::init()
+    gdt::init();
+    unsafe {
+        pic::PICS.lock().initialize();
+    }
+    interrupts::enable();
+}
+
+pub fn halt() -> ! {
+    loop {
+        x86_64::instructions::hlt();
+    }
 }
