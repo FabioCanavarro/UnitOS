@@ -1,4 +1,4 @@
-use core::usize;
+use core::{u8, usize};
 
 use crate::{gdt, pic::InterruptIndex};
 use crate::pic::PICS;
@@ -58,11 +58,11 @@ extern "x86-interrupt" fn timer_handler(_stack_frame: InterruptStackFrame) {
 }
 
 extern "x86-interrupt" fn keyboard_handler(_stack_frame: InterruptStackFrame) {
-    println!("x");
     let mut p: Port<u16> = Port::new(0x60);
 
     unsafe {
         let n = p.read();
+        println!("{}",n as u8);
         PICS.lock()
                     .notify_end_of_interrupt(InterruptIndex::Keyboard.as_u8());
     }
