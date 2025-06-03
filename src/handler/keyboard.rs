@@ -15,6 +15,8 @@ lazy_static!(
     };
 );
 
+
+// I AM LOSING MY FUCKING MIND bro
 pub fn process_key(byte: u8) -> Result<Option<char>,pc_keyboard::Error> {
     let mut board = KEYBOARD.lock();
     let x = board.add_byte(byte)?;
