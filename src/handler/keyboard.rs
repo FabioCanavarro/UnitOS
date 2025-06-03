@@ -17,30 +17,18 @@ lazy_static!(
 
 
 // I AM LOSING MY FUCKING MIND bro
-pub fn process_key(byte: u8) -> Result<Option<char>,pc_keyboard::Error> {
+pub fn process_key(byte: u8) -> Result<Option<DecodedKey>,pc_keyboard::Error> {
     let mut board = KEYBOARD.lock();
+
+    // NOTE: Might change later, cuz of inefficiency cuz twice
     let x = board.add_byte(byte)?;
     match &x {
         Some(_) => (),
         None => return Ok(None)
     }
     
-    let decoded = board.process_keyevent(x.unwrap());
-
-    match decoded {
-        Some(e) => (),
-        None => return Ok(None)
-        
-    }
-
-    match decoded.unwrap() {
-        DecodedKey::Unicode(x) => {
-            Ok(Some(x))
-        },
-        DecodedKey::RawKey(x) => {
-            Ok(Some('C'))
-        }
-    }
+    // Fuck this shit, imma do this only
+    Ok(board.process_keyevent(x.unwrap()))
 }
 
 
