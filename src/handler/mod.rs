@@ -1,4 +1,5 @@
 pub mod interrupt_table;
+pub mod keyboard;
 
 // Tests
 

@@ -1,5 +1,3 @@
-use core::{u8, usize};
-
 use crate::{gdt, pic::InterruptIndex};
 use crate::pic::PICS;
 use crate::{print, println};
