@@ -4,7 +4,7 @@ use crate::{gdt, pic::InterruptIndex};
 use crate::pic::PICS;
 use crate::{print, println};
 use lazy_static::lazy_static;
-use x86_64::instructions::port;
+use x86_64::instructions::port::{self, Port, PortGeneric, PortReadAccess, PortReadOnly, PortWriteAccess};
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
 /* NOTE: Initialize IDT as a static only when called
@@ -59,7 +59,10 @@ extern "x86-interrupt" fn timer_handler(_stack_frame: InterruptStackFrame) {
 
 extern "x86-interrupt" fn keyboard_handler(_stack_frame: InterruptStackFrame) {
     println!("x");
+    let mut p: Port<u16> = Port::new(0x60);
+
     unsafe {
+        let n = p.read();
         PICS.lock()
                     .notify_end_of_interrupt(InterruptIndex::Keyboard.as_u8());
     }
