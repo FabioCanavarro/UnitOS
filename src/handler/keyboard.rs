@@ -6,7 +6,7 @@ use spin::Mutex;
 
 use crate::println;
 
-lazy_static! {
+lazy_static! (
     static ref KEYBOARD: Mutex<Keyboard<Us104Key, ScancodeSet1>> = {
         Mutex::new(Keyboard::new(
             ScancodeSet1::new(),
@@ -14,7 +14,7 @@ lazy_static! {
             HandleControl::Ignore,
         ))
     };
-};
+);
 
 // I AM LOSING MY FUCKING MIND bro
 pub fn process_key(byte: u8) -> Result<Option<DecodedKey>, pc_keyboard::Error> {
