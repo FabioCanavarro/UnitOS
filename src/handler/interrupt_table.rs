@@ -60,10 +60,12 @@ extern "x86-interrupt" fn keyboard_handler(_stack_frame: InterruptStackFrame) {
     unsafe {
 
         let decodedkey = super::keyboard::process_key(p.read() as u8);
-        match decodedkey.expect("Not a key lol").expect("None") {
-            pc_keyboard::DecodedKey::RawKey(char) => println!("{:?}",char),
-            pc_keyboard::DecodedKey::Unicode(char) => println!("{}",char)
-        };
+        if let Some(x) = decodedkey.expect("Not a key lol") {
+            match x {
+                pc_keyboard::DecodedKey::RawKey(char) => print!("{:?}",char),
+                pc_keyboard::DecodedKey::Unicode(char) => print!("{}",char)
+            }
+        }
         PICS.lock()
                     .notify_end_of_interrupt(InterruptIndex::Keyboard.as_u8());
     }
