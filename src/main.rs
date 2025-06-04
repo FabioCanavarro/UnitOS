@@ -7,7 +7,7 @@
 
 use core::panic::PanicInfo;
 use rusty_os::test_trait::Tests;
-use rusty_os::{exit_qemu, halt, println, test_runner, QemuExitCode};
+use rusty_os::{QemuExitCode, exit_qemu, halt, println, test_runner};
 use x86_64::instructions::interrupts;
 use x86_64::instructions::port::Port;
 

@@ -6,9 +6,9 @@
 #![reexport_test_harness_main = "test_main"]
 #![allow(unused_imports)]
 
-pub mod pic;
 pub mod gdt;
 pub mod handler;
+pub mod pic;
 pub mod serial;
 pub mod test_trait;
 pub mod vga;

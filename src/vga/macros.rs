@@ -23,8 +23,7 @@ macro_rules! println {
 pub fn _print(args: fmt::Arguments) {
     use core::fmt::Write;
 
-    interrupts::without_interrupts(| |{
-            WRITER.lock().write_fmt(args).unwrap();
-        }
-    )
+    interrupts::without_interrupts(|| {
+        WRITER.lock().write_fmt(args).unwrap();
+    })
 }

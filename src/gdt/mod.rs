@@ -31,7 +31,7 @@ lazy_static!(
     };
 );
 
-lazy_static! (
+lazy_static! {
     static ref GDT: (GlobalDescriptorTable, Selector) = {
         let mut gdt = GlobalDescriptorTable::new();
         let code_segment = gdt.add_entry(Descriptor::kernel_code_segment());
@@ -44,7 +44,7 @@ lazy_static! (
             },
         )
     };
-);
+};
 
 pub fn init() {
     GDT.0.load();

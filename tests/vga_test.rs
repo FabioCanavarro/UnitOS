@@ -7,7 +7,8 @@
 use core::panic::PanicInfo;
 
 use rusty_os::{
-    halt, println, test_panic_handler, vga::{BUFFER_HEIGHT, WRITER}
+    halt, println, test_panic_handler,
+    vga::{BUFFER_HEIGHT, WRITER},
 };
 use x86_64::instructions::interrupts;
 
@@ -28,10 +29,10 @@ fn panic(info: &PanicInfo) -> ! {
 fn test_println_output() {
     let s = "Testing!!!";
     println!("{}", s);
-     // WARN: THIS IS A TEMPORARY FIXED, TO DISABLE INTERRUPTS
+    // WARN: THIS IS A TEMPORARY FIXED, TO DISABLE INTERRUPTS
     interrupts::without_interrupts(|| {
         for (i, c) in s.chars().enumerate() {
-           let screen_char = WRITER.lock().buffer.chars[BUFFER_HEIGHT as usize - 2][i].read();
+            let screen_char = WRITER.lock().buffer.chars[BUFFER_HEIGHT as usize - 2][i].read();
             assert_eq!(char::from(screen_char.char), c);
         }
     });
@@ -46,9 +47,9 @@ fn test_multi_line_print() {
     println!("{}", s2);
 
     // 1st line
-    
+
     // WARN: THIS IS A TEMPORARY FIXED, TO DISABLE INTERRUPTS
-    interrupts::without_interrupts(||{
+    interrupts::without_interrupts(|| {
         for (i, c) in s.chars().enumerate() {
             let char = WRITER.lock().buffer.chars[BUFFER_HEIGHT as usize - 3][i].read();
             assert_eq!(char::from(char.char), c);
@@ -56,10 +57,9 @@ fn test_multi_line_print() {
     });
 
     // 2nd line
-    
-    // WARN: THIS IS A TEMPORARY FIXED, TO DISABLE INTERRUPTS
-    interrupts::without_interrupts(||{
 
+    // WARN: THIS IS A TEMPORARY FIXED, TO DISABLE INTERRUPTS
+    interrupts::without_interrupts(|| {
         for (i, c) in s2.chars().enumerate() {
             let char = WRITER.lock().buffer.chars[BUFFER_HEIGHT as usize - 2][i].read();
             assert_eq!(char::from(char.char), c);

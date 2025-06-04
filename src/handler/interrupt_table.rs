@@ -1,8 +1,10 @@
-use crate::{gdt, pic::InterruptIndex};
 use crate::pic::PICS;
+use crate::{gdt, pic::InterruptIndex};
 use crate::{print, println};
 use lazy_static::lazy_static;
-use x86_64::instructions::port::{self, Port, PortGeneric, PortReadAccess, PortReadOnly, PortWriteAccess};
+use x86_64::instructions::port::{
+    self, Port, PortGeneric, PortReadAccess, PortReadOnly, PortWriteAccess,
+};
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
 /* NOTE: Initialize IDT as a static only when called
@@ -51,45 +53,22 @@ extern "x86-interrupt" fn timer_handler(_stack_frame: InterruptStackFrame) {
         // NOTE: Reason why this runs infinitely is that
         // when an interrupt happens, an EOI is sent which creates ends the current data sending by
         // the timer
-        PICS.lock().notify_end_of_interrupt(InterruptIndex::Timer.as_u8());
+        PICS.lock()
+            .notify_end_of_interrupt(InterruptIndex::Timer.as_u8());
     }
 }
 
 extern "x86-interrupt" fn keyboard_handler(_stack_frame: InterruptStackFrame) {
     let mut p: Port<u16> = Port::new(0x60);
     unsafe {
-
         let decodedkey = super::keyboard::process_key(p.read() as u8);
         if let Some(x) = decodedkey.expect("Not a key lol") {
             match x {
-                pc_keyboard::DecodedKey::RawKey(char) => print!("{:?}",char),
-                pc_keyboard::DecodedKey::Unicode(char) => print!("{}",char)
+                pc_keyboard::DecodedKey::RawKey(char) => print!("{:?}", char),
+                pc_keyboard::DecodedKey::Unicode(char) => print!("{}", char),
             }
         }
         PICS.lock()
-                    .notify_end_of_interrupt(InterruptIndex::Keyboard.as_u8());
+            .notify_end_of_interrupt(InterruptIndex::Keyboard.as_u8());
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

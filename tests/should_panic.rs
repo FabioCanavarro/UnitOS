@@ -5,7 +5,7 @@
 #![reexport_test_harness_main = "test_main"]
 
 use core::panic::PanicInfo;
-use rusty_os::{exit_qemu, halt, serial_print, serial_println, QemuExitCode};
+use rusty_os::{QemuExitCode, exit_qemu, halt, serial_print, serial_println};
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
