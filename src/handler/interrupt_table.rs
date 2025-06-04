@@ -1,9 +1,8 @@
-use core::usize;
-
 use crate::{gdt, pic::InterruptIndex};
 use crate::pic::PICS;
 use crate::{print, println};
 use lazy_static::lazy_static;
+use x86_64::instructions::port::{self, Port, PortGeneric, PortReadAccess, PortReadOnly, PortWriteAccess};
 use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
 
 /* NOTE: Initialize IDT as a static only when called
@@ -21,6 +20,7 @@ lazy_static! {
             idt.double_fault.set_handler_fn(double_fault_handler).set_stack_index(gdt::DOUBLE_FAULT_IST_INDEX as u16);
         }
         idt[InterruptIndex::Timer.as_u8() as usize].set_handler_fn(timer_handler);
+        idt[InterruptIndex::Keyboard.as_u8() as usize].set_handler_fn(keyboard_handler);
         idt
     };
 }
@@ -44,10 +44,9 @@ extern "x86-interrupt" fn double_fault_handler(
     );
 }
 
-extern "x86-interrupt" fn timer_handler(stack_frame: InterruptStackFrame) {
+extern "x86-interrupt" fn timer_handler(_stack_frame: InterruptStackFrame) {
     // NOTE: THIS forms a deadlock as its asynchrous
     // It is never freed lol
-    print!(".");
     unsafe {
         // NOTE: Reason why this runs infinitely is that
         // when an interrupt happens, an EOI is sent which creates ends the current data sending by
@@ -55,3 +54,42 @@ extern "x86-interrupt" fn timer_handler(stack_frame: InterruptStackFrame) {
         PICS.lock().notify_end_of_interrupt(InterruptIndex::Timer.as_u8());
     }
 }
+
+extern "x86-interrupt" fn keyboard_handler(_stack_frame: InterruptStackFrame) {
+    let mut p: Port<u16> = Port::new(0x60);
+    unsafe {
+
+        let decodedkey = super::keyboard::process_key(p.read() as u8);
+        if let Some(x) = decodedkey.expect("Not a key lol") {
+            match x {
+                pc_keyboard::DecodedKey::RawKey(char) => print!("{:?}",char),
+                pc_keyboard::DecodedKey::Unicode(char) => print!("{}",char)
+            }
+        }
+        PICS.lock()
+                    .notify_end_of_interrupt(InterruptIndex::Keyboard.as_u8());
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
