@@ -57,10 +57,13 @@ extern "x86-interrupt" fn timer_handler(_stack_frame: InterruptStackFrame) {
 
 extern "x86-interrupt" fn keyboard_handler(_stack_frame: InterruptStackFrame) {
     let mut p: Port<u16> = Port::new(0x60);
-
     unsafe {
-        let n = p.read();
-        println!("{}",n as u8);
+
+        let decodedkey = super::keyboard::process_key(p.read() as u8);
+        match decodedkey.expect("Not a key lol").expect("None") {
+            pc_keyboard::DecodedKey::RawKey(char) => println!("{:?}",char),
+            pc_keyboard::DecodedKey::Unicode(char) => println!("{}",char)
+        };
         PICS.lock()
                     .notify_end_of_interrupt(InterruptIndex::Keyboard.as_u8());
     }
