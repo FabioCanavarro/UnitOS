@@ -16,8 +16,18 @@ pub extern "C" fn _start() -> ! {
     println!("UnitOs");
 
     rusty_os::init();
+
     #[cfg(test)]
     test_main();
+
+    let broken:  *mut u8 = 0xdeadbeef as *mut u8;
+
+    unsafe {
+        let mut n = 0x2054a6 as *mut u8;
+        println!("{:?}",  *(0x2054a6 as *mut u8));
+        *n = 21;
+        
+    }
 
     halt()
 }
