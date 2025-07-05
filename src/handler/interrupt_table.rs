@@ -2,10 +2,12 @@ use crate::pic::PICS;
 use crate::{gdt, pic::InterruptIndex};
 use crate::{print, println};
 use lazy_static::lazy_static;
+use x86_64::instructions::hlt;
 use x86_64::instructions::port::{
     self, Port, PortGeneric, PortReadAccess, PortReadOnly, PortWriteAccess,
 };
-use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame};
+use x86_64::registers::control::Cr2;
+use x86_64::structures::idt::{InterruptDescriptorTable, InterruptStackFrame, PageFaultErrorCode};
 
 /* NOTE: Initialize IDT as a static only when called
 *        and create a mutable reference to its mutable static variable
@@ -15,6 +17,7 @@ lazy_static! {
     static ref IDT: InterruptDescriptorTable = {
         let mut idt: InterruptDescriptorTable = InterruptDescriptorTable::new();
         idt.breakpoint.set_handler_fn(breakpoint_handler);
+        idt.page_fault.set_handler_fn(page_fault_handler);
         unsafe {
             // NOTE:
             // Switch stack pointer to DOUBLE_FAULT_IST_INDEX which is to another stack when double
@@ -72,3 +75,30 @@ extern "x86-interrupt" fn keyboard_handler(_stack_frame: InterruptStackFrame) {
             .notify_end_of_interrupt(InterruptIndex::Keyboard.as_u8());
     }
 }
+
+extern "x86-interrupt" fn page_fault_handler(stack_frame: InterruptStackFrame, error_code: PageFaultErrorCode) {
+    println!("EXCEPTION: PAGE FAULT");
+    println!("Accessed Address: {:?}", Cr2::read());
+    println!("Error Code: {:?}", error_code);
+    println!("{:#?}", stack_frame);
+    hlt();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
