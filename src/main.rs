@@ -10,6 +10,7 @@ use rusty_os::test_trait::Tests;
 use rusty_os::{QemuExitCode, exit_qemu, halt, println, test_runner};
 use x86_64::instructions::interrupts;
 use x86_64::instructions::port::Port;
+use x86_64::registers::control::Cr3;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
@@ -20,14 +21,15 @@ pub extern "C" fn _start() -> ! {
     #[cfg(test)]
     test_main();
 
-    let broken:  *mut u8 = 0xdeadbeef as *mut u8;
 
     unsafe {
-        let mut n = 0x2054a6 as *mut u8;
-        println!("{:?}",  *(0x2054a6 as *mut u8));
-        *n = 21;
-        
+        let x = Cr3::read_raw().0;
+        println!("Page size {:?}", x.size());
+        println!("Starting adress {:?}", x.start_address());
     }
+    /*
+    * THE SIZE IS ACTUALLY 4096 lollllooolloloololloollolo
+    */
 
     halt()
 }
