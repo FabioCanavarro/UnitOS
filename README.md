@@ -42,7 +42,7 @@ Since this is a very basic OS, you'll need a way to compile it and run it in an 
 ##  Further Development
 
 Possible new features:
-* **More drivers:** Add drivers for other hardware devices, such as the disk, and network interface or perhaps even the mouse
+* **More drivers:** Add drivers for other hardware devices, such as the disk, and network interface
 * **Memory management:** Implement a memory management system to allocate and deallocate memory
 * **Basic input:** Implement mouse input
 * **File system:** Design a simple file system
