@@ -28,7 +28,7 @@ pub extern "C" fn _start() -> ! {
         println!("Starting adress {:?}", x.start_address());
     }
     /*
-    * THE SIZE IS ACTUALLY 4096 lollllooolloloololloollolo
+    * THE SIZE IS ACTUALLY 4096
     */
 
     halt()
