@@ -30,6 +30,11 @@ lazy_static! {
     };
 }
 
+
+// WARN: Temporary workaround until rust-lang fixes it Issue #143075
+type Interrupt<R> = unsafe extern "x86-interrupt" fn(InterruptDescriptorTable) -> R;
+type ErrInterrupt<R> = unsafe extern "x86-interrupt" fn(InterruptDescriptorTable, usize) -> R;
+
 pub fn init() {
     IDT.load();
 }
